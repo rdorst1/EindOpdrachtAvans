@@ -8,7 +8,7 @@ user = [
     {
         firstname: 'Rowan',
         lastname: 'Dorst',
-        email: 'rowan@gmail.com',
+        email: 'rowan05@gmail.com',
         password: 'qwerty'
     }
 ];
