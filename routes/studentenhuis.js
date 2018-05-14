@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
+const db = require('../datasource/dbConnection');
 
 router.get('/', (req, res) => {
-
+    db.query("SELECT * FROM studentenhuis;", function (err, result) {
+        if (err) throw err;
+        console.log(result);
+        res.status(200).json(result);
+    });
 });
 
 //

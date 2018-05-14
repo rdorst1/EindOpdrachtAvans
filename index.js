@@ -25,7 +25,7 @@ app.use('/api/register', require('./routes/Register'));
 const port = process.env.PORT || 9090;
 
 app.listen(port, function() {
-    console.log('http://localhost:' + port);
+    console.log('The server is online on: http://localhost:' + port);
 });
 
 module.exports = app;
