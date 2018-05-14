@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jwt-simple')
 const auth = require('../auth/authentication.js')
-const studentenhuis = require('../routes/studentenhuis.js')
-const db = require('../datasource/dbCon');
+const studentenhuis = require('./studentenhuis.js')
+const db = require('../datasource/dbConnection');
 
 //
 // Login with {"username":"<username>", "password":"<password>"}
