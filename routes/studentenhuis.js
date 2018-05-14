@@ -49,7 +49,7 @@ router.delete('/huisId/maaltijd/:maaltijdId', (req, res, next) => {
 
 
 //
-// deelnemers
+// deelnemers.
 //
 
 router.route('/:huisId/maaltijd/:maaltijdId')
@@ -67,7 +67,7 @@ router.delete('/huisId/maaltijd/:maaltijdId/deelnemers', (req, res, next) => {
 
 
 //
-// Fall back, display some info
+// Fall back, display some info.
 //
 router.all('*', (req, res) => {
 
