@@ -49,7 +49,7 @@ router.delete('/huisId/maaltijd/:maaltijdId', (req, res, next) => {
 
 
 //
-// deelnemers
+// deelnemers.
 //
 
 router.route('/:huisId/maaltijd/:maaltijdId')
