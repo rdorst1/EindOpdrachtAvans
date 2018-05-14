@@ -1,20 +1,31 @@
-var http = require('http');
-var express = require('express');
+const express = require('express');
+const app = express();
+const config = require('./config.json');
+const bodyParser = require('body-parser');
 
-var app = express();
+app.set('PORT', config.webPort);
+app.set('SECRET_KEY', config.secretkey);
 
-app.all('*', function(req, res, next) {
-    console.log(req.method + " " + req.url);
+app.use(bodyParser.urlencoded({ extended:true }));
+app.use(bodyParser.json());
+
+app.all('*', function(req, res, next){
+    console.log( req.method + " " + req.url);
     next();
 });
 
-app.post('/apiv1/studentenhuis')
+app.use(express.static(__dirname + '/public'));
 
-app.get('/apiv1/studentenhuis', function(req, res, next) {
-    res.contentType('application/json');
-    res.json( {"msg":"Studentenhuis."} );
+// Routing with versions
+app.use('/api', require('./routes/Login'));
+app.use('/api/studentenhuis', require('./routes/studentenhuis'));
+app.use('/api/register', require('./routes/Register'));
+
+// Start the server
+const port = process.env.PORT || 9090;
+
+app.listen(port, function() {
+    console.log('http://localhost:' + port);
 });
 
-app.listen(9090, function() {
-    console.log('The magic happens at http://localhost:9090');
-});
+module.exports = app;
