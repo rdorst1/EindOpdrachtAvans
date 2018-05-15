@@ -56,6 +56,15 @@ function incorrectRights(res){
     });
 }
 
+//Error melding voor als de gebruiker al ingeschreven staat.
+function alreadySignedIn(res){
+    res.status(409).json({
+        "msg": "Conflict (U al reeds ingeschreven hiervoor)",
+        "code": 409,
+        "datetime": new Date().format("d/M/Y H:m:S")
+    });
+}
+
 //Error melding voor als er in de request delen ontbreken
 function missingProperties(res){
     res.status(412).json({
@@ -73,4 +82,5 @@ module.exports = {
     emailIncorrect,
     incorrectRights,
     missingProperties,
+    alreadySignedIn
 };
