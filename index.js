@@ -17,9 +17,9 @@ app.all('*', function(req, res, next){
 app.use(express.static(__dirname + '/public'));
 
 // Routing with versions
-app.use('/api', require('./routes/Login'));
+app.use('/api', require('./routes/api'));
 app.use('/api/studentenhuis', require('./routes/studentenhuis'));
-app.use('/api/register', require('./routes/Register'));
+// app.use('/api/register', require('./routes/Register'));
 
 // Start the server
 const port = process.env.PORT || 9090;
