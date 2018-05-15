@@ -64,3 +64,13 @@ function missingProperties(res){
         "datetime": new Date().format("d/m/Y H:M:S")
     });
 }
+
+module.exports = {
+    noAuth,
+    notFound,
+    noResults,
+    emailExists,
+    emailIncorrect,
+    incorrectRights,
+    missingProperties
+};
