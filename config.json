@@ -3,6 +3,6 @@
   "dbUsername" : "database_name",
   "dbPassword": "supersecret",
   "dbSchema" :  "database_schema",
-  "dbServer" :  "188.166.109.108",
+  "dbServer" :  "localhost",
   "webPort" :   "9090"
 }
