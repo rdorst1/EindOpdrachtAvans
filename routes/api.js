@@ -34,12 +34,12 @@ router.route('/login').post( function(req, res) {
                     "parameters": res.body
                 });
             } else {
-                error.notAuthorized(res);
+                error.noAuth(res);
                 return;
             }
         })
     }else{
-        error.emailInvalid(res);
+        error.emailIncorrect(res);
         return;
     }
 });
@@ -53,7 +53,7 @@ router.route('/register').post( function(req, res){
     let password = req.body.password || '';
     if (firstname !== '' && lastname !== '' && email !== '' && password !== '') {
         if(firstname.length < 2 || lastname.length < 2){
-            error.missingProp(res);
+            error.missingProperties(res);
             return;
         }
 
@@ -77,12 +77,12 @@ router.route('/register').post( function(req, res){
             })
         }
         else{
-            error.emailInvalid(res);
+            error.emailIncorrect(res);
             return;
         }
     }
     else{
-        error.missingProp(res);
+        error.missingProperties(res);
         return;
     }
 });
