@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const users = require('../datasource/logins');
 const db = require('../datasource/dbConnection');
+const auth = require('../auth/authentication');
 
 
 
@@ -26,11 +27,12 @@ router.route('/')
             password : password
         };
         users.push(newUser);
-        console.log(users);
 
         // Generate JWT
         if( result[0] ) {
             res.status(401).json({"error":"Deze gebruiker bestaat al!"});
+        } else if(firstname === '' || lastname === '' || email === '' || password === '') {
+            res.status(412).json({"error":"Niet alle informatie is ingevuld"});
         } else {
 
             db.query("INSERT INTO `user` (Voornaam, Achternaam, Email, Password) VALUES (?, ?, ?, ?)" ,[firstname, lastname, email, password], function(err, result) {
@@ -38,7 +40,9 @@ router.route('/')
                     if (err) throw err;
                 })
             });
-            res.status(200).json({"email" : email, "msg" : "account aangemaakt!"});
+            let token = auth.encodeToken(email);
+
+            res.status(200).json({"email" : email, "token" : token, "msg" : "account aangemaakt!"});
         }
 
     });
