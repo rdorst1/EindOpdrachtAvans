@@ -44,6 +44,6 @@ router.route('/login').post( function(req, res) {
     })
 });
 
-router.use('/studentenhuis', studentenhuis)
+router.use('/studentenhuis', studentenhuis);
 
 module.exports = router;
