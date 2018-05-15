@@ -7,7 +7,7 @@ function noAuth(res){
     res.status(401).json({
         "msg": "Niet geautoriseerd (geen valid token).",
         "code": 401,
-        "datetime": new Date().format("d/m/Y H:M:S")
+        "datetime": new Date().format("d/M/Y H:m:S")
     });
 }
 
@@ -16,7 +16,7 @@ function notFound(res){
     res.status(404).json({
         "msg": "Niet gevonden",
         "code": 404,
-        "datetime": new Date().format("d/m/Y H:M:S")
+        "datetime": new Date().format("d/M/Y H:m:S")
     });
 }
 
@@ -25,7 +25,7 @@ function noResults(res){
     res.status(404).json({
         "msg": "Er konden geen resultaten worden gevonden",
         "code": 404,
-        "datetime": new Date().format("d/m/Y H:M:S")
+        "datetime": new Date().format("d/M/Y H:m:S")
     });
 }
 
@@ -34,7 +34,7 @@ function emailExists(res){
     res.status(409).json({
         "msg": "Conflict (Deze email is al in gebruik)",
         "code": 409,
-        "datetime": new Date().format("d/m/Y H:M:S")
+        "datetime": new Date().format("d/M/Y H:m:S")
     })
 }
 
@@ -43,7 +43,7 @@ function emailIncorrect(res){
     res.status(409).json({
         "msg": "Conflict (Het opgegeven email adres is incorrect)",
         "code": 409,
-        "datetime": new Date().format("d/m/Y H:M:S")
+        "datetime": new Date().format("d/M/Y H:m:S")
     });
 }
 
@@ -52,7 +52,7 @@ function incorrectRights(res){
     res.status(409).json({
         "msg": "Conflict (U hebt niet voldoende rechten om de actie uit te voeren)",
         "code": 409,
-        "datetime": new Date().format("d/m/Y H:M:S")
+        "datetime": new Date().format("d/M/Y H:m:S")
     });
 }
 
@@ -61,6 +61,16 @@ function missingProperties(res){
     res.status(412).json({
         "msg": "Een of meer properties in de request body ontbreken of zijn foutief",
         "code": 412,
-        "datetime": new Date().format("d/m/Y H:M:S")
+        "datetime": new Date().format("d/M/Y H:m:S")
     });
 }
+
+module.exports = {
+    noAuth,
+    notFound,
+    noResults,
+    emailExists,
+    emailIncorrect,
+    incorrectRights,
+    missingProperties,
+};
