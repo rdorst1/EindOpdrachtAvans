@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../datasource/logins');
+const db = require('../datasource/dbConnection');
 
 
 
@@ -32,8 +33,12 @@ router.route('/')
             res.status(401).json({"error":"Deze gebruiker bestaat al!"});
         } else {
 
-
-            res.status(200).json({"email" : email, "berichtje" : "account aangemaakt!"});
+            db.query("INSERT INTO `user` (Voornaam, Achternaam, Email, Password) VALUES (?, ?, ?, ?)" ,[firstname, lastname, email, password], function(err, result) {
+                db.query("SELECT Voornaam, Achternaam, Email FROM user WHERE Email = ?",[email], function(err, result) {
+                    if (err) throw err;
+                })
+            });
+            res.status(200).json({"email" : email, "msg" : "account aangemaakt!"});
         }
 
     });
