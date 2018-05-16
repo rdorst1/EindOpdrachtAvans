@@ -7,7 +7,7 @@ const error = require('../errorsHandler/Errors');
 const auth = require('../auth/authentication');
 const studentenhuis = require('./studentenhuis');
 
-
+//POST Maaltijd met format: { "naam":"naam", "beschrijving":"beschrijving", "ingredienten":"ingredienten", "allergie":"allergie", "prijs":"prijs: }
 router.post('/', (req, res) => {
     let HouseId = req.params.huisId || '';
     let Name = req.body.naam || '';
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
         error.missingProperties(res)
     }
 });
-
+// GET ALL Maaltijden met houseId
 router.get('/', (req, res)=> {
     let HouseId = req.params.huisId || '';
     console.log(HouseId);
@@ -53,6 +53,7 @@ router.get('/', (req, res)=> {
     })
 });
 
+// GET Maatijd met houseId en maaltijdId
 router.get('/:maaltijdId?', (req, res)=> {
     let HouseId = req.params.huisId || '';
     checkId(HouseId, res);
@@ -67,6 +68,7 @@ router.get('/:maaltijdId?', (req, res)=> {
     })
 });
 
+//PUT Maaltijd in maaltijdId
 router.put('/:maaltijdId', (req, res) => {
     let maaltijdId = req.params.maaltijdId || '';
     let houseId = req.params.huisId || '';
@@ -82,15 +84,16 @@ router.put('/:maaltijdId', (req, res) => {
     email = email.sub;
 
     if (Name !== '' && Desc !== '' && Ingredients !== '' && Allergies !== '' && Price !== '') {
-        //Get Current user ID
+        //Get vragende gebruiker
         db.query("SELECT ID FROM user WHERE Email = ?", [email], function (err, rows) {
             let currentUserId = rows[0].ID;
 
-            //Get existing user ID
+            //Get makende gebruiker
             checkId(houseId, res);
             db.query("SELECT UserID FROM maaltijd WHERE ID = ?", [maaltijdId], function (err, rows) {
                 let existingUserId = rows[0].UserID;
 
+                // Vergelijk vragende gebruiker met maker
                 if (currentUserId === existingUserId) {
                     db.query("UPDATE maaltijd SET Naam = ?, Beschrijving = ?, Ingredienten = ?, Allergie = ?, Prijs = ? WHERE ID = ?", [Name, Desc, Ingredients, Allergies, Price, maaltijdId], function (err, result) {
                         console.log(result);
@@ -114,7 +117,7 @@ router.delete('/:maaltijdId', (req, res) => {
 
     db.query("SELECT * FROM maaltijd WHERE ID = ?", [maaltijdId], (err, result) => {
         if (result.length > 0) {
-            //Get Current user ID
+            //Get vragende gebruiker
             let token = req.get('Authorization');
             token = token.substring(7);
             let email = auth.decodeToken(token);
@@ -122,11 +125,11 @@ router.delete('/:maaltijdId', (req, res) => {
             db.query("SELECT ID FROM user WHERE Email = ?", [email], function (err, rows) {
                 let currentUserId = rows[0].ID;
 
-                //Get existing user ID
+                //Get makende gebruiker
                 checkId(houseId, res);
                 db.query("SELECT UserID FROM maaltijd WHERE ID = ?", [maaltijdId], function (err, rows) {
                     let existingUserId = rows[0].UserID;
-
+                    // Vergelijk vragende met makende gebruiker
                     if (currentUserId === existingUserId) {
                         db.query("DELETE FROM maaltijd WHERE ID = ?", [maaltijdId], function (err, result) {
                             res.status(200).json({

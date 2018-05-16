@@ -7,14 +7,14 @@ const db = require('../datasource/dbConnection');
 const error = require('../errorsHandler/Errors');
 let regex = require('regex-email');
 
-//
-// Login with {"username":"<username>", "password":"<password>"}
-//
+// Login met format:  {"email":"<email>", "password":"<password>"}
+
 router.route('/login').post( function(req, res) {
     let email = req.body.email || '';
     let password = req.body.password || '';
 
     if(regex.test(email) === true){
+        //Haal email & wachtwoord op
         db.query('SELECT email, password FROM user WHERE email = ?', [email], function (err, rows, fields) {
             if (err) {
                 res.status(500).json(err);
@@ -25,7 +25,7 @@ router.route('/login').post( function(req, res) {
                 error.notFound(res);
                 return;
             }
-
+            // Vergelijk input met database
             if (email == rows[0].email && password == rows[0].password) {
                 var token = auth.encodeToken(email);
                 res.status(200).json({
@@ -45,7 +45,7 @@ router.route('/login').post( function(req, res) {
 });
 
 
-
+// Register met format: {"firstname":"<firstname>", "lastname":"<lastname>", "email":"<email>", "password":"<password>"
 router.route('/register').post( function(req, res){
     let firstname = req.body.firstname || '';
     let lastname = req.body.lastname || '';
@@ -53,12 +53,14 @@ router.route('/register').post( function(req, res){
     let password = req.body.password || '';
 
     if (firstname !== '' && lastname !== '' && email !== '' && password !== '') {
+        //Check lengte van firstname en lastname
         if(firstname.length < 2 || lastname.length < 2){
             error.missingProperties(res);
             return;
         }
 
         if (regex.test(email) === true) {
+            //Check of email al is geregistreerd
             db.query("SELECT Email FROM user WHERE Email = ?", [email], function(err, result) {
                 if(result.length > 0){
                     error.emailExists(res);
