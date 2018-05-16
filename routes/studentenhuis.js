@@ -17,6 +17,7 @@ router.post('/', (req, res) => {
 
     if (name !== '' && address !== '') {
         db.query("SELECT ID FROM user WHERE email = ?", [email], function (err, rows, fields) {
+            if (err) throw err;
             let userId = rows[0].ID;
 
             db.query("INSERT INTO `studentenhuis` (Naam, Adres, UserID) VALUES (?, ?, ?)", [name, address, userId], function (err, rows, fields) {

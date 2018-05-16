@@ -1,5 +1,5 @@
 {
-  "secretkey":  "MyFirstServerSuperSecretKey-123454321AbCd-",
+  "secretkey":  "secret",
   "dbUsername" : "database_name",
   "dbPassword": "supersecret",
   "dbSchema" :  "database_schema",
