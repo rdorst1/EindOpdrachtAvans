@@ -2,7 +2,11 @@
   "name": "studentenhuis",
   "version": "1.0.0",
   "description": "Eindopdracht van programmeren 4.",
-  "main": "Studentenhuis-app.js",
+  "main": "index.js",
+  "engines": {
+    "node": "8.11.1",
+    "npm": "5.6.0"
+  },
   "directories": {
     "test": "test"
   },
@@ -11,11 +15,14 @@
     "jsonwebtoken": "^8.2.1",
     "jwt-simple": "^0.5.1",
     "moment": "^2.22.1",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "node.date-time": "^1.2.2",
+    "regex-email": "^1.0.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
