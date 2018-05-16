@@ -138,6 +138,7 @@ describe('Maaltijden API Post', function () {
     });
 });
 
+//--------IGNORE THIS--------
 // describe('Maaltijden API GET', function () {
 //     before(function () {
 //         validToken = require('./authentication.routes.test').token

@@ -19,13 +19,13 @@ router.post('/', (req, res) => {
         console.log(userId);
         console.log(huisId);
         console.log(maaltijdId);
-        // Check of gebruiker niet al ingeschreven staat
+        // Check of gebruiker niet al ingeschreven staat en geeft een error mee als dat het geval is.
         db.query("SELECT * FROM deelnemers WHERE UserID = ? AND StudentenhuisID = ? AND MaaltijdID = ?;", [userId, huisId, maaltijdId], function (err, result) {
             if (result.length > 0) {
                 error.userExists(res)
             }
             else {
-                // Voeg gebruiker toe aan de deelnemers
+                // Voeg gebruiker toe aan de deelnemers en wordt opgeslagen in de database.
                 db.query("INSERT INTO `deelnemers` (UserID, StudentenhuisID, MaaltijdID) VALUES ('" + userId + "', '" + huisId + "', '"+ maaltijdId + "');", function (err, result) {
                     console.log(result);
                     console.log("insert");
@@ -51,9 +51,8 @@ router.get('/:deelnemers?', function(req, res)  {
                         if (err) throw err;
                         res.json(result)
                     })
-                }
-                else{
-                    error.notFound(res)
+                } else{
+                    error.notFound(res)//Error voor als het gevraagde niet kan worden gevonden
                 }
             })
 
@@ -90,14 +89,12 @@ router.delete('/', (req , res)=> {
                         "msg": "deelnemer succesvol verwijderd",
                         "status": "200",
                         "datetime": new Date().format("d-M-Y H:m:s")
+                        //Als de deelnemer succesvol is verwijderd wordt dat weergegeven met daarbij de datum en tijd.
                     })
                 })
+            } else{
+                error.incorrectRights(res)//Error als de gebruiker niet de correcte rechten heeft.
             }
-            else{
-                error.incorrectRights(res)
-            }
-
-
         })
     })
 });

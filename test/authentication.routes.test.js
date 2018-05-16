@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 // After successful registration we have a valid token. We export this token
 // for usage in other testcases that require login.
 
-describe('Registration', function () {
+describe('Registration', function () { //Registratie tests.
     this.timeout(10000);
 
     it('should return a token when providing valid information', function (done) {
@@ -130,7 +130,7 @@ describe('Registration', function () {
     })
 });
 
-describe('Login', function () {
+describe('Login', function () {//Login tests
     this.timeout(10000);
 
     it('should return a token when providing valid information', function(done) {
@@ -170,7 +170,7 @@ describe('Login', function () {
             .post('/api/login')
             .send({
                 "email": "jsmit@server.nl",
-                "password": "test"
+                "password": "foutWachtwoord"
             })
             .end((err, res) => {
                 res.should.have.status(401);
@@ -182,7 +182,7 @@ describe('Login', function () {
         chai.request(app)
             .post('/api/login')
             .send({
-                "email": "test",
+                "email": "fouteemail",
                 "password": "secret"
             })
             .end((err, res) => {

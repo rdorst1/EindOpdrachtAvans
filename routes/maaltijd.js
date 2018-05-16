@@ -68,7 +68,7 @@ router.get('/:maaltijdId?', (req, res)=> {
     })
 });
 
-//PUT Maaltijd in maaltijdId
+//PUT Maaltijd met maaltijdId
 router.put('/:maaltijdId', (req, res) => {
     let maaltijdId = req.params.maaltijdId || '';
     let houseId = req.params.huisId || '';
@@ -110,7 +110,7 @@ router.put('/:maaltijdId', (req, res) => {
         error.missingProperties(res)
     }
 });
-
+//Maaltijd verwijderen aan de hand van het maaltijdId.
 router.delete('/:maaltijdId', (req, res) => {
     let maaltijdId = req.params.maaltijdId || '';
     let houseId = req.params.huisId || '';

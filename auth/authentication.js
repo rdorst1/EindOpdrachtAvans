@@ -22,15 +22,13 @@ function decodeToken(token, cb) {
     try {
         const payload = jwt.decode(token, config.secretkey);
 
-        // Check if the token has expired. To do: Trigger issue in db ..
+        // Check of de token verlopen is.
         const now = moment().unix();
 
-        // Check if the token has expired
+        // Check of de token niet verlopen is.
         if (now > payload.exp) {
             console.log('Token has expired.');
         }
-
-        // Return
         return payload;
 
     } catch(err) {

@@ -7,12 +7,13 @@ const db = require('../datasource/dbConnection');
 const error = require('../errorsHandler/Errors');
 let regex = require('regex-email');
 
-// Login met format:  {"email":"<email>", "password":"<password>"}
+//Om in te loggen type je eerst je email en daaronder je password. Het ziet als volgt uit:
+//{"email": "voorbeeld@gmail.com" "password": "12345"}
 
 router.route('/login').post( function(req, res) {
     let email = req.body.email || '';
     let password = req.body.password || '';
-
+//Check of het een geldig emailadres is door middel van een regex plugin
     if(regex.test(email) === true){
         //Haal email & wachtwoord op
         db.query('SELECT email, password FROM user WHERE email = ?', [email], function (err, rows, fields) {
@@ -39,13 +40,14 @@ router.route('/login').post( function(req, res) {
             }
         })
     }else{
-        error.emailIncorrect(res);
+        error.emailIncorrect(res);//Als het emailadres incorrect is wordt hier een error meegegeven.
         return;
     }
 });
 
 
-// Register met format: {"firstname":"<firstname>", "lastname":"<lastname>", "email":"<email>", "password":"<password>"
+//Om te registreren geeft je eerst je firstname op daarna lastname, email en password. Het ziet er als volgt uit:
+// {"firstname":"<firstname>", "lastname":"<lastname>", "email":"<email>", "password":"<password>"
 router.route('/register').post( function(req, res){
     let firstname = req.body.firstname || '';
     let lastname = req.body.lastname || '';
@@ -60,12 +62,12 @@ router.route('/register').post( function(req, res){
         }
 
         if (regex.test(email) === true) {
-            //Check of email al is geregistreerd
+            //Check of email al is geregistreerd en geeft een error mee als de email al bestaat.
             db.query("SELECT Email FROM user WHERE Email = ?", [email], function(err, result) {
                 if(result.length > 0){
                     error.emailExists(res);
                     return;
-                }else{
+                }else{//Bestaat de email nog niet dan wordt die in de database gezet.
                     db.query("INSERT INTO `user` (Voornaam, Achternaam, Email, Password) VALUES (?, ?, ?, ?)" ,[firstname, lastname, email, password], function(err, result) {
                         db.query("SELECT Voornaam, Achternaam, Email FROM user WHERE Email = ?",[email], function(err, result) {
                             if (err) throw err;
@@ -80,12 +82,12 @@ router.route('/register').post( function(req, res){
             })
         }
         else{
-            error.emailIncorrect(res);
+            error.emailIncorrect(res);//Error voor als het email adres niet klopt.
             return;
         }
     }
     else{
-        error.missingProperties(res);
+        error.missingProperties(res);//Error voor als er een fout is gemaakt in de properties.
         return;
     }
 });
