@@ -24,5 +24,8 @@ app.use(function (err, req, res, next) {
 });
 
 app.use('/api', api);
-app.listen(config.webPort)
+const PORT = process.env.PORT || 9090;
+app.listen(PORT, () => {
+    console.log('Our app is running on port ${ PORT }');
+});
 module.exports = app;
