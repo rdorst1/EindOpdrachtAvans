@@ -1,31 +1,28 @@
 const express = require('express');
-const app = express();
-const config = require('./config.json');
+let app = express();
+const expressJWT = require('express-jwt');
+const api = require('./routes/api');
+const config = require('./config');
 const bodyParser = require('body-parser');
+const error = require('./errorsHandler/Errors');
 
-app.set('PORT', config.webPort);
-app.set('SECRET_KEY', config.secretkey);
-
-app.use(bodyParser.urlencoded({ extended:true }));
+app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
-app.all('*', function(req, res, next){
-    console.log( req.method + " " + req.url);
+app.use(expressJWT({
+    secret: config.secretkey
+}).unless({
+    path: ['/api/login', '/api/register']
+}));
+
+app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError'){
+        error.noAuth(res);
+        return;
+    }
     next();
 });
 
-app.use(express.static(__dirname + '/public'));
-
-// Routing with versions
-app.use('/api', require('./routes/api'));
-app.use('/api/studentenhuis', require('./routes/studentenhuis'));
-// app.use('/api/register', require('./routes/Register'));
-
-// Start the server
-const port = process.env.PORT || 9090;
-
-app.listen(port, function() {
-    console.log('The server is online on: http://localhost:' + port);
-});
-
+app.use('/api', api);
+app.listen(config.webPort)
 module.exports = app;
