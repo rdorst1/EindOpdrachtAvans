@@ -35,7 +35,7 @@ function emailExists(res){
         "msg": "Conflict (Deze email is al in gebruik)",
         "code": 409,
         "datetime": new Date().format("d/M/Y H:m:S")
-    })
+    });
 }
 
 //Error melding voor als het opgegeven email adres niet voldoet aan de regex.
