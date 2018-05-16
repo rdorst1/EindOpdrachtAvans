@@ -19,8 +19,8 @@ describe('Registration', function () {
         chai.request(app)
             .post('/api/register')
             .send({
-                "voornaam": "Niek",
-                "achternaam": "Dooper",
+                "firstname": "Niek",
+                "lastname": "Dooper",
                 "email": "ndooper@avans.nl",
                 "password": "1234"
             })
@@ -45,10 +45,10 @@ describe('Registration', function () {
         chai.request(app)
             .post('/api/register')
             .send({
-                "voornaam": "Jan",
-                "achternaam": "Smit",
-                "email": "jsmit@server.nl",
-                "password": "secret"
+                "firstname": "mannetje",
+                "lastname": "achternaampie",
+                "email": "hahapiemel@gmail.com",
+                "password": "1234"
             })
             .end((err, res) => {
                 res.should.have.status(409);
@@ -60,7 +60,7 @@ describe('Registration', function () {
         chai.request(app)
             .post('/api/register')
             .send({
-                "achternaam": "Dooper",
+                "lastname": "Dooper",
                 "email": "ndooper@avans.nl",
                 "password": "1234"
             })
@@ -68,14 +68,14 @@ describe('Registration', function () {
                 res.should.have.status(412);
                 done()
             })
-    })
+    });
 
     it('should throw an error when firstname is shorter than 2 chars', function(done) {
         chai.request(app)
             .post('/api/register')
             .send({
-                "voornaam": "N",
-                "achternaam": "Dooper",
+                "firstname": "N",
+                "lastname": "Dooper",
                 "email": "ndooper@avans.nl",
                 "password": "1234"
             })
@@ -89,7 +89,7 @@ describe('Registration', function () {
         chai.request(app)
             .post('/api/register')
             .send({
-                "voornaam": "Niek",
+                "firstname": "Niek",
                 "email": "ndooper@avans.nl",
                 "password": "1234"
             })
@@ -103,8 +103,8 @@ describe('Registration', function () {
         chai.request(app)
             .post('/api/register')
             .send({
-                "voornaam": "Niek",
-                "achternaam": "D",
+                "firstname": "Niek",
+                "lastname": "D",
                 "email": "ndooper@avans.nl",
                 "password": "1234"
             })
@@ -118,9 +118,9 @@ describe('Registration', function () {
         chai.request(app)
             .post('/api/register')
             .send({
-                "voornaam": "Niek",
-                "achternaam": "Dooper",
-                "email": "invalid",
+                "firstname": "Niek",
+                "lastname": "Dooper",
+                "email": "test",
                 "password": "1234"
             })
             .end((err, res) => {

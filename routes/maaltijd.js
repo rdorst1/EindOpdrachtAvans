@@ -10,11 +10,11 @@ const studentenhuis = require('./studentenhuis');
 
 router.post('/', (req, res) => {
     let HouseId = req.params.huisId || '';
-    let Name = req.body.naam || '';
-    let Desc = req.body.Beschrijving || '';
-    let Ingredients = req.body.Ingredienten || '';
-    let Allergies = req.body.Allergie || '';
-    let Price = req.body.Prijs || '';
+    let Name = req.body.name || '';
+    let Desc = req.body.beschrijving || '';
+    let Ingredients = req.body.ingredienten || '';
+    let Allergies = req.body.allergie || '';
+    let Price = req.body.prijs || '';
 
     let token = req.get('Authorization');
     token = token.substring(7);
@@ -70,11 +70,11 @@ router.get('/:maaltijdId?', (req, res)=> {
 router.put('/:maaltijdId', (req, res) => {
     let maaltijdId = req.params.maaltijdId || '';
     let houseId = req.params.huisId || '';
-    let Name = req.body.naam || '';
-    let Desc = req.body.Beschrijving || '';
-    let Ingredients = req.body.Ingredienten || '';
-    let Allergies = req.body.Allergie || '';
-    let Price = req.body.Prijs || '';
+    let Name = req.body.name || '';
+    let Desc = req.body.description || '';
+    let Ingredients = req.body.ingredients || '';
+    let Allergies = req.body.allergies || '';
+    let Price = req.body.price || '';
 
     let token = req.get('Authorization');
     token = token.substring(7);
@@ -160,6 +160,6 @@ function checkId(houseId, res) {
 
 
 
-router.use('/:maaltijdId', deelnemers);
+router.use('/:maaltijdId/deelnemers', deelnemers);
 
 module.exports = router;

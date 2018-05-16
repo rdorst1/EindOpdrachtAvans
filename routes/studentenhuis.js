@@ -101,7 +101,7 @@ router.delete('/:houseId', (req, res) => {
             if (currentUserId == existingUserId) {
                 db.query("DELETE FROM studentenhuis WHERE ID = ?", [houseId], function (err, result) {
                     res.status(200).json({
-                        "msg": "Huis succesvol verwijderd",
+                        "message": "Huis succesvol verwijderd",
                         "status": "200",
                         "datetime": new Date().format("d-M-Y H:m:s")
                     })

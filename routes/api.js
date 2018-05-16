@@ -29,7 +29,7 @@ router.route('/login').post( function(req, res) {
             if (email == rows[0].email && password == rows[0].password) {
                 var token = auth.encodeToken(email);
                 res.status(200).json({
-                    "token": token,
+                    "token": 'Bearer ' + token,
                     "status": 200,
                     "parameters": res.body
                 });
@@ -51,6 +51,7 @@ router.route('/register').post( function(req, res){
     let lastname = req.body.lastname || '';
     let email = req.body.email || '';
     let password = req.body.password || '';
+
     if (firstname !== '' && lastname !== '' && email !== '' && password !== '') {
         if(firstname.length < 2 || lastname.length < 2){
             error.missingProperties(res);
