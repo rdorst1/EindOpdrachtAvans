@@ -32,7 +32,6 @@ describe('Registration', function () {
                 done()
             })
     });
-
     it('should return an error on GET request', function(done) {
         chai.request(app)
             .get('/api/register')

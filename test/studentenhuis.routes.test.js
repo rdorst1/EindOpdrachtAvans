@@ -13,7 +13,6 @@ describe('Studentenhuis API POST', function () {
     before(function () {
         validToken = require('./authentication.routes.test').token
     });
-
     this.timeout(10000);
 
     it('should throw an error when using invalid JWT token', (done) => {
