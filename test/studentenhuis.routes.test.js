@@ -248,7 +248,6 @@ describe('Studentenhuis API DELETE', function() {
             .set('Authorization', validToken)
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.be.a('array');
                 done()
             })
     });
